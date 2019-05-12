@@ -4,7 +4,10 @@ import { generateLabel } from './generator/label';
 import { replaceInText } from './generator/replace-in-text';
 
 export function createSourceCode(component: azog.Component): string {
-	let res = starter;
+	let res = replaceInText(starter, {
+		windowWidth: '500',
+		windowHeight: '500'
+	});
 	let mainFuctionContent: string[] = [];
 	if (component.view instanceof azog.LabelWFView) {
 		const createLabelcode = generateLabel(component, 'addLabel');
@@ -28,9 +31,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var window: NSWindow!
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        window.setContentSize(CGSize(width: 300, height: 300))
+        window.setContentSize(CGSize(width: {{windowWidth}}, height: {{windowHeight}}))
         let parentView = window.contentView!
-        window.backgroundColor = .red
         {{content}}
     }
 }`;
